@@ -12,9 +12,9 @@ class DartDeclaration {
   JsonKeyMutate jsonKey;
   List<Decorator> decorators = [];
   List<String> imports = [];
-  String type;
-  String name;
-  String assignment;
+  String? type;
+  String? name;
+  String? assignment;
   List<Command> keyComands = [];
   List<Command> valueCommands = [];
   List<String> enumValues = [];
@@ -22,7 +22,7 @@ class DartDeclaration {
   bool get isEnum => enumValues.isNotEmpty;
 
   DartDeclaration({
-    this.jsonKey,
+    required this.jsonKey,
     this.type,
     this.name,
     this.assignment,
@@ -54,24 +54,24 @@ class DartDeclaration {
     return deco != null && deco.isNotEmpty ? '$deco ' : '';
   }
 
-  String getDecorator() {
-    return decorators?.join('\n');
+  String? getDecorator() {
+    return decorators.join('\n');
   }
 
   List<String> getImportStrings() {
     return imports
-        .where((element) => element != null && element.isNotEmpty)
+        .where((element) => element.isNotEmpty)
         .map((e) => "import '$e.dart';")
         .toList();
   }
 
-  static String getTypeFromJsonKey(String theString) {
+  static String? getTypeFromJsonKey(String theString) {
     var declare = theString.split(')').last.trim().split(' ');
     if (declare.isNotEmpty) return declare.first;
     return null;
   }
 
-  static String getNameFromJsonKey(String theString) {
+  static String? getNameFromJsonKey(String theString) {
     var declare = theString.split(')').last.trim().split(' ');
     if (declare.length > 1) return declare.last;
     return null;
@@ -96,7 +96,7 @@ class DartDeclaration {
   }
 
   Enum getEnum(String className) {
-    return Enum(className, name, enumValues);
+    return Enum(className, name!, enumValues);
   }
 
   void addImport(import) {
@@ -112,7 +112,7 @@ class DartDeclaration {
   }
 
   static DartDeclaration fromKeyValue(key, val) {
-    var dartDeclaration = DartDeclaration();
+    var dartDeclaration = DartDeclaration(jsonKey: JsonKeyMutate());
     dartDeclaration = fromCommand(
       Commands.valueCommands,
       dartDeclaration,
@@ -130,29 +130,29 @@ class DartDeclaration {
   }
 
   static DartDeclaration fromCommand(List<Command> commandList, self,
-      {dynamic testSubject, String key, dynamic value}) {
+      {dynamic testSubject, required String key, dynamic value}) {
     var newSelf = self;
     for (var command in commandList) {
       if (testSubject is String) {
         if ((command.prefix != null &&
-            testSubject.startsWith(command.prefix))) {
+            testSubject.startsWith(command.prefix!))) {
           if ((command.prefix != null &&
                   command.command != null &&
-                  testSubject.startsWith(command.prefix + command.command)) ||
+                  testSubject.startsWith(command.prefix! + command.command!)) ||
               (command.command != null &&
-                  testSubject.startsWith(command.command))) {
+                  testSubject.startsWith(command.command!))) {
             if (command.notprefix != null &&
-                    !testSubject.startsWith(command.notprefix) ||
+                    !testSubject.startsWith(command.notprefix!) ||
                 command.notprefix == null) {
               newSelf =
-                  command.callback(self, testSubject, key: key, value: value);
+                  command.callback!(self, testSubject, key: key, value: value);
               break;
             }
           }
         }
       }
       if (testSubject.runtimeType == command.type) {
-        newSelf = command.callback(self, testSubject, key: key, value: value);
+        newSelf = command.callback!(self, testSubject, key: key, value: value);
         break;
       }
     }

@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:expressions/expressions.dart';
 
 class JsonKeyMutate {
-  Object defaultValue;
-  bool disallowNullValue;
-  Function fromJson;
-  bool ignore;
-  bool includeIfNull;
-  String name;
-  bool nullable;
-  bool required;
-  Function toJson;
-  Object unknownEnumValue;
+  Object? defaultValue;
+  bool? disallowNullValue;
+  Function? fromJson;
+  bool? ignore;
+  bool? includeIfNull;
+  String? name;
+  bool? nullable;
+  bool? required;
+  Function? toJson;
+  Object? unknownEnumValue;
   JsonKeyMutate({
     this.defaultValue,
     this.disallowNullValue,
@@ -94,7 +94,7 @@ class JsonKeyMutate {
         final evaluator = const ExpressionEvaluator();
         var theMap = [
           e.first,
-          evaluator.eval(expression, null),
+          evaluator.eval(expression, Map()),
         ];
         return theMap;
       },

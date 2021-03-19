@@ -12,17 +12,18 @@ import 'package:build_runner/src/build_script_generate/bootstrap.dart';
 import 'package:build_runner/src/logging/std_io_logging.dart';
 
 class BuildScript {
-  BuildScript(this.args);
   var localCommands = [CleanCommand(), GenerateBuildScript()];
 
-  BuildCommandRunner commandRunner;
-  List<String> args;
+  //  commandRunner;
+  final List<String> args;
 
-  ArgResults parsedArgs;
-  void build() async {
+  // ArgResults parsedArgs;
+  BuildScript(this.args);
+  build() async {
     var localCommandNames = localCommands.map((c) => c.name).toSet();
 
     ArgResults parsedArgs;
+    BuildCommandRunner commandRunner;
     try {
       commandRunner =
           BuildCommandRunner([], await PackageGraph.forThisPackage());
@@ -32,7 +33,7 @@ class BuildScript {
       print('');
       print(e.usage);
       exitCode = ExitCode.usage.code;
-      return;
+      return false;
     }
 
     var commandName = parsedArgs.command?.name;
@@ -43,12 +44,12 @@ class BuildScript {
       print('');
       print(commandRunner.usageWithoutDescription);
       exitCode = ExitCode.usage.code;
-      return;
+      return false;
     }
 
     if (commandName == null || commandName == 'help') {
       commandRunner.printUsage();
-      return;
+      return true;
     }
 
     final logListener = Logger.root.onRecord.listen(stdIOLogListener());
@@ -58,6 +59,7 @@ class BuildScript {
       while (
           (exitCode = await generateAndRun(args)) == ExitCode.tempFail.code) {}
     }
-    await logListener?.cancel();
+    await logListener.cancel();
+    return true;
   }
 }
