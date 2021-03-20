@@ -19,7 +19,7 @@ class BuildScript {
 
   // ArgResults parsedArgs;
   BuildScript(this.args);
-  build() async {
+  Future<void> build() async {
     var localCommandNames = localCommands.map((c) => c.name).toSet();
 
     ArgResults parsedArgs;
@@ -33,7 +33,7 @@ class BuildScript {
       print('');
       print(e.usage);
       exitCode = ExitCode.usage.code;
-      return false;
+      return;
     }
 
     var commandName = parsedArgs.command?.name;
@@ -44,12 +44,12 @@ class BuildScript {
       print('');
       print(commandRunner.usageWithoutDescription);
       exitCode = ExitCode.usage.code;
-      return false;
+      return;
     }
 
     if (commandName == null || commandName == 'help') {
       commandRunner.printUsage();
-      return true;
+      return;
     }
 
     final logListener = Logger.root.onRecord.listen(stdIOLogListener());
@@ -60,6 +60,6 @@ class BuildScript {
           (exitCode = await generateAndRun(args)) == ExitCode.tempFail.code) {}
     }
     await logListener.cancel();
-    return true;
+    return;
   }
 }
