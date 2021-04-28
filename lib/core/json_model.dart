@@ -1,11 +1,12 @@
 import 'package:convert_json_model/core/dart_declaration.dart';
 
-import '../utils/extensions.dart';
+import 'package:convert_json_model/utils/extensions.dart';
 
 class JsonModel {
   String? fileName;
   String? className;
   String? declaration;
+  String? argsParams;
   String? imports;
   List<String>? imports_raw;
   String? enums;
@@ -17,6 +18,7 @@ class JsonModel {
     className = fileName.toTitleCase();
     declaration = dartDeclarations.toDeclarationStrings(className!);
     imports = dartDeclarations.toImportStrings();
+    argsParams = dartDeclarations.toArgsStrings(className!);
     imports_raw = dartDeclarations.getImportRaw();
     enums = dartDeclarations.getEnums(className!);
     nestedClasses = dartDeclarations.getNestedClasses();

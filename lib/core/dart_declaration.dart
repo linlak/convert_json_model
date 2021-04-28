@@ -1,12 +1,12 @@
-import 'dart:io';
 import 'dart:collection';
+import 'dart:io';
+
 import 'package:convert_json_model/core/command.dart';
 import 'package:convert_json_model/core/decorator.dart';
 import 'package:convert_json_model/core/json_key.dart';
 import 'package:convert_json_model/core/json_model.dart';
 import 'package:convert_json_model/core/model_template.dart';
-
-import '../utils/extensions.dart';
+import 'package:convert_json_model/utils/extensions.dart';
 
 class DartDeclaration {
   JsonKeyMutate jsonKey;
@@ -29,7 +29,7 @@ class DartDeclaration {
   }) {
     keyComands = Commands.keyComands;
     valueCommands = Commands.valueCommands;
-    jsonKey = JsonKeyMutate();
+    // jsonKey = JsonKeyMutate();
   }
 
   String toDeclaration(String className) {
@@ -48,6 +48,10 @@ class DartDeclaration {
 
   String stringifyAssignment(value) {
     return value != null ? ' = $value' : '';
+  }
+
+  String nullableModefier(value) {
+    return value != null ? '?' : '';
   }
 
   String stringifyDecorator(deco) {
@@ -92,9 +96,14 @@ class DartDeclaration {
 
   void setEnumValues(List<String> values) {
     enumValues = values;
-    type = _detectType(values.first);
+    // TODO: nullsafety operator
+    type = '${_detectType(values.first)}?';
   }
 
+/**
+ * gets enum from [className]
+ * getEnum('User');
+ */
   Enum getEnum(String className) {
     return Enum(className, name!, enumValues);
   }
@@ -206,7 +215,7 @@ ${valuesForTemplate()}
 
 class $converterName<$valueType, O> {
   Map<$valueType, O> map;
-  Map<O, $valueType> reverseMap;
+  Map<O, $valueType>? reverseMap;
 
   $converterName(this.map);
 
@@ -218,8 +227,8 @@ class $converterName<$valueType, O> {
   String toImport() {
     return '''
 $enumName 
-  get ${enumName.toCamelCase()} => $enumValuesMapName.map[$name];
-  set ${enumName.toCamelCase()}($enumName value) => $name = $enumValuesMapName.reverse[value];''';
+  get ${enumName.toCamelCase()} => $enumValuesMapName.map[$name] as $enumName;
+  set ${enumName.toCamelCase()}($enumName value) => $name = $enumValuesMapName.reverse[value]!;''';
   }
 }
 

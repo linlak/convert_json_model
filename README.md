@@ -11,9 +11,9 @@ on `pubspec.yaml`
 ```yaml
 dependencies:
   convert_json_model: #latest
-  build_runner: ^1.12.2
-  json_annotation: ^4.0.0
-  json_serializable: ^4.0.3
+  build_runner: ^2.0.1
+  json_annotation: ^4.0.1
+  json_serializable: ^4.1.1
 ```
 
 install using `pub get` command or if you using dart vscode/android studio, you can use install option.
@@ -89,7 +89,7 @@ class Examples {
     set examplesUserTypeEnum(ExamplesUserTypeEnum value) => userType = _examplesUserTypeEnumValues.reverse[value];
   @JsonKey(name: 'user_type') String userType;
   ExamplesAuthStateEnum 
-    get examplesAuthStateEnum => _examplesAuthStateEnumValues.map[authState];
+    get examplesAuthStateEnum => _examplesAuthStateEnumValues.map[authState]!;
     set examplesAuthStateEnum(ExamplesAuthStateEnum value) => authState = _examplesAuthStateEnumValues.reverse[value];
   @JsonKey(name: 'auth_state') int authState;
   User user;
@@ -117,7 +117,7 @@ final _examplesAuthStateEnumValues = _ExamplesAuthStateEnumConverter({
 
 class _ExamplesUserTypeEnumConverter<String, O> {
   Map<String, O> map;
-  Map<O, String> reverseMap;
+  Map<O, String>? reverseMap;
 
   _ExamplesUserTypeEnumConverter(this.map);
 
@@ -126,7 +126,7 @@ class _ExamplesUserTypeEnumConverter<String, O> {
 
 class _ExamplesAuthStateEnumConverter<int, O> {
   Map<int, O> map;
-  Map<O, int> reverseMap;
+  Map<O, int>? reverseMap;
 
   _ExamplesAuthStateEnumConverter(this.map);
 

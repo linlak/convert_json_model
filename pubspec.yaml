@@ -1,6 +1,6 @@
 name: convert_json_model
 description: Generate model class from Json file. partly inspired by json_model.
-version: 0.0.2
+version: 0.0.3
 author: Linus Nowomukama
 homepage: https://github.com/linlak/convert_json_model
 
@@ -8,14 +8,14 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  args: ^2.0.0
-  build_runner: ^1.12.2
-  build_runner_core: ^6.1.12
-  expressions: ^0.2.0
+  args: ^2.1.0
+  build_runner: ^2.0.1
+  build_runner_core: ^7.0.0
+  expressions: ^0.2.2
   io: ^1.0.0
-  json_annotation: ^4.0.0
-  json_serializable: ^4.0.3
-  logging: ^1.0.0
+  json_annotation: ^4.0.1
+  json_serializable: ^4.1.1
+  logging: ^1.0.1
   path: ^1.8.0
 
 dev_dependencies: 

@@ -2,17 +2,10 @@ import 'dart:convert';
 
 import 'package:expressions/expressions.dart';
 
+/**
+ * Used to annotate keys
+ */
 class JsonKeyMutate {
-  Object? defaultValue;
-  bool? disallowNullValue;
-  Function? fromJson;
-  bool? ignore;
-  bool? includeIfNull;
-  String? name;
-  bool? nullable;
-  bool? required;
-  Function? toJson;
-  Object? unknownEnumValue;
   JsonKeyMutate({
     this.defaultValue,
     this.disallowNullValue,
@@ -25,6 +18,17 @@ class JsonKeyMutate {
     this.toJson,
     this.unknownEnumValue,
   });
+
+  Object? defaultValue;
+  bool? disallowNullValue;
+  Function? fromJson;
+  bool? ignore;
+  bool? includeIfNull;
+  String? name;
+  bool? nullable;
+  bool? required;
+  Function? toJson;
+  Object? unknownEnumValue;
   void addKey({
     defaultValue,
     disallowNullValue,
@@ -66,6 +70,7 @@ class JsonKeyMutate {
 
   static String writeParamIfnotNull(Map maps) {
     var theString = [];
+
     maps.forEach((key, value) {
       if (value != null) {
         if (value is String) value = "'$value'";
@@ -74,6 +79,7 @@ class JsonKeyMutate {
         theString.add('$key: ${value}');
       }
     });
+
     return theString.join(', ');
   }
 
@@ -83,6 +89,7 @@ class JsonKeyMutate {
 
   factory JsonKeyMutate.fromJsonKeyParamaString(String theString) {
     theString = getParameterString(theString);
+
     var newList = theString
         .split(',')
         .map((e) => e.split(':'))
@@ -93,15 +100,18 @@ class JsonKeyMutate {
         var expression = Expression.parse(theValue);
         final evaluator = const ExpressionEvaluator();
         var theMap = [
-          e.first,
+          e.first.trim(),
           evaluator.eval(expression, Map()),
         ];
+
         return theMap;
       },
     );
-    var newMap = {
-      for (var demo in newList) '${demo.first}': demo.last,
-    };
+    Map<String, dynamic> newMap = Map<String, dynamic>();
+    newMap.clear();
+    newList.forEach((e) {
+      newMap.putIfAbsent(e.first, () => e.last);
+    });
     return JsonKeyMutate(
       defaultValue: newMap['defaultValue'],
       disallowNullValue: newMap['disallowNullValue'],

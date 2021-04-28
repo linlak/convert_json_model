@@ -64,6 +64,12 @@ extension JsonKeyModels on List<DartDeclaration> {
     return map((e) => e.toDeclaration(className)).join('\n').trim();
   }
 
+  String toArgsStrings(String className) {
+    var argsString = map((e) => 'this\.${e.name}').join(',\n').trim();
+
+    return '{\n$argsString,\n}';
+  }
+
   String toImportStrings() {
     var imports = where((element) => element.imports.isNotEmpty)
         .map((e) => e.getImportStrings())

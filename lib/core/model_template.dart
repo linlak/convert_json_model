@@ -11,6 +11,7 @@ class ModelTemplates {
             className: data.className,
             declaration: data.declaration,
             enums: data.enums,
+            argsParams: data.argsParams,
             enumConverters: data.enumConverters,
             nestedClasses: data.nestedClasses,
           );
@@ -21,6 +22,7 @@ class ModelTemplates {
     String? fileName,
     String? className,
     String? declaration,
+    String? argsParams,
     String? enums,
     String? enumConverters,
     String? nestedClasses,
@@ -40,7 +42,7 @@ part '$fileName.g.dart';
     template += '''
 @JsonSerializable()
 class ${className ?? '/*TODO: className*/'} {
-      ${className ?? '/*TODO: className*/'}();
+      ${className ?? '/*TODO: className*/'}(${argsParams ?? ''});
 
   ${declaration ?? '/*TODO: declaration*/'}
 

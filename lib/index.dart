@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:convert_json_model/core/model_template.dart';
-import 'package:convert_json_model/utils/build_script.dart';
 import 'package:path/path.dart' as path;
 
-import './core/json_model.dart';
+import 'package:convert_json_model/core/json_model.dart';
+import 'package:convert_json_model/core/model_template.dart';
+import 'package:convert_json_model/utils/build_script.dart';
 
 class JsonModelRunner {
   String srcDir = './jsons/';
   String distDir = './lib/models/';
-  String? onlyFile = './lib/models/';
+  String? onlyFile;
   List<FileSystemEntity> list = [];
 
-  JsonModelRunner(
-      {required String source, required String output, String? onlyFile})
-      : srcDir = source,
-        distDir = output,
-        onlyFile = onlyFile;
+  JsonModelRunner({String? source, String? output, String? onlyFile}) {
+    this.srcDir = source ?? this.srcDir;
+    this.distDir = output ?? this.distDir;
+    this.onlyFile = onlyFile ?? this.onlyFile;
+  }
 
   void setup() {
     if (srcDir.endsWith('/')) srcDir = srcDir.substring(0, srcDir.length - 1);
