@@ -13,10 +13,9 @@ class JsonModelRunner {
   String? onlyFile;
   List<FileSystemEntity> list = [];
 
-  JsonModelRunner({String? source, String? output, String? onlyFile}) {
+  JsonModelRunner({String? source, String? output, this.onlyFile}) {
     this.srcDir = source ?? this.srcDir;
     this.distDir = output ?? this.distDir;
-    this.onlyFile = onlyFile ?? this.onlyFile;
   }
 
   void setup() {

@@ -1,3 +1,5 @@
+## [0.0.4] - 28/04/2021
+* Fixed bugs
 ## [0.0.3] - 28/04/2021
 
 * Fixed declarations

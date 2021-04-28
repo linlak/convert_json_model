@@ -3,7 +3,7 @@ import 'package:convert_json_model/convert_json_model.dart';
 
 void main(List<String> arguments) {
   var source = '';
-  String? onlyFile = null;
+  String? onlyFile;
   var output = '';
   var argParser = ArgParser();
   argParser
@@ -29,8 +29,8 @@ void main(List<String> arguments) {
       help: 'Specify file to read',
     )
     ..parse(arguments);
-  var runner = JsonModelRunner(
-      source: source, output: output, onlyFile: onlyFile ?? null);
+  var runner =
+      JsonModelRunner(source: source, output: output, onlyFile: onlyFile);
   runner..setup();
 
   print('Start generating');
