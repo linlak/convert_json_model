@@ -42,12 +42,11 @@ part '$fileName.g.dart';
     template += '''
 @JsonSerializable()
 class ${className ?? '/*TODO: className*/'} {
-      ${className ?? '/*TODO: className*/'}(${argsParams ?? ''});
+  ${className ?? '/*TODO: className*/'}(${argsParams ?? ''});
       
-      factory ${className ?? '/*TODO: className*/'}.fromJson(Map<String,dynamic> json) => _\$${className}FromJson(json);
-      Map<String, dynamic> toJson() => _\$${className}ToJson(this);
-
-      ${declaration ?? '/*TODO: declaration*/'}
+  factory ${className ?? '/*TODO: className*/'}.fromJson(Map<String,dynamic> json) => _\$${className}FromJson(json);
+  Map<String, dynamic> toJson() => _\$${className}ToJson(this);
+  ${declaration ?? '/*TODO: declaration*/'}
 ''';
 
     if ((enumConverters?.length ?? 0) > 0) {
