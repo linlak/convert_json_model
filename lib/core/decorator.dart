@@ -1,10 +1,11 @@
 class Decorator {
-  String prfix = '';
-  String string = '';
   Decorator(String fullString) {
     prfix = fullString.split('(').first;
     string = fullString;
   }
+
+  String prfix = '';
+  String string = '';
   @override
   String toString() {
     return string;

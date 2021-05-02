@@ -29,7 +29,6 @@ class DartDeclaration {
   }) {
     keyComands = Commands.keyComands;
     valueCommands = Commands.valueCommands;
-    // jsonKey = JsonKeyMutate();
   }
 
   String toDeclaration(String className) {

@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:expressions/expressions.dart';
 
-/**
- * Used to annotate keys
- */
+/// Used to annotate keys
 class JsonKeyMutate {
   JsonKeyMutate({
     this.defaultValue,

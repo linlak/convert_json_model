@@ -42,8 +42,7 @@ class Commands {
                 newDeclaration.type ??
                 self.type)! +
             '?';
-        //TODO: remove print
-        print('JsonKey type ${self.type}');
+
         self.name = DartDeclaration.getNameFromJsonKey(testSubject) ??
             newDeclaration.name ??
             self.name;
@@ -222,7 +221,6 @@ class Commands {
           return self;
         }
         // TODO: nullsafety operator
-        //
         self.type = '${value.runtimeType.toString()}?';
         return self;
       },

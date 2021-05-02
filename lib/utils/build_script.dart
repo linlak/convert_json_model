@@ -16,10 +16,10 @@ import 'package:convert_json_model/utils/commands/generate_build_script.dart';
 class BuildScript {
   var localCommands = [CleanCommand(), GenerateBuildScript()];
 
-  //  commandRunner;
+  ///  commandRunner;
   final List<String> args;
 
-  // ArgResults parsedArgs;
+  /// ArgResults parsedArgs;
   BuildScript(this.args);
   Future<void> build() async {
     var localCommandNames = localCommands.map((c) => c.name).toSet();

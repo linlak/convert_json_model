@@ -26,21 +26,21 @@ class JsonModelRunner {
   }
 
   bool run({command}) {
-    // run
-    // get all json files ./jsons
+    /// run
+    /// get all json files ./jsons
     list = onlyFile == null
         ? getAllJsonFiles()
         : [File(path.join(srcDir, onlyFile))];
     if (!generateModelsDirectory()) return false;
-    if (!iterateJsonFile()) return false;
+    if (!iterateJsonFiles()) return false;
 
     return true;
   }
 
   void cleanup() async {
-    // wrapup cleanup
+    /// wrapup cleanup
 
-    // build
+    /// build
     if (onlyFile == null) {
       await BuildScript(['build', '--delete-conflicting-outputs']).build();
     } else {
@@ -50,7 +50,7 @@ class JsonModelRunner {
     }
   }
 
-  // all json files
+  /// all json files
   List<FileSystemEntity> getAllJsonFiles() {
     var src = Directory(srcDir);
     return src.listSync(recursive: true);
@@ -64,8 +64,8 @@ class JsonModelRunner {
     return true;
   }
 
-  // iterate json files
-  bool iterateJsonFile() {
+  /// iterate json files
+  bool iterateJsonFiles() {
     var error = StringBuffer();
 
     var indexFile = '';
@@ -114,7 +114,7 @@ class JsonModelRunner {
     });
   }
 
-  // generate models from the json file
+  /// generate models from the json file
   bool generateFileFromJson(outputPath, JsonModel jsonModel, name) {
     try {
       File(outputPath)
